@@ -1,16 +1,34 @@
-# This is a sample Python script.
+import string
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+path = "./Macbeth.txt"
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+with open(path, "r") as f:
+    counts = {}
+    plaintext = f.read()
+    plaintext = plaintext.lower()
+    nopunc = plaintext.translate(str.maketrans('', '', string.punctuation))
+    nopunc = nopunc.replace("\n", " ")
+    list = nopunc.split(" ")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    for i in list:
+        counts[i] = counts.get(i, 0) + 1
+
+
+def Main():
+    inn = int(input("Would you like to count a certain word (1) or show all words that only appear once? (2) "))
+
+    if inn == 1:
+        try:
+            print(counts[input("Enter the word you wish to count: ")])
+        except:
+            Main()
+
+    elif inn == 2:
+        temp = []
+        for i in counts:
+            if counts[i] == 1:
+                temp.append(i)
+        print(temp)
+
+Main()
